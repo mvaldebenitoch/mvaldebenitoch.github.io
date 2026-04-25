@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Miguel Valdebenito</title>
+  <meta name="description" content="Aerospace Engineer, PhD Candidate, and deep-tech founder building intelligent systems at the intersection of satellites, geophysics, and machine learning." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:ital,wght@0,300;0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =========================================
+       BASE
+    ========================================= */
+    :root {
+      --ink:       #0b0b0d;
+      --ink2:      #141418;
+      --ink3:      #1d1d24;
+      --line:      #252530;
+      --line2:     #32323e;
+      --paper:     #f0ede6;
+      --paper2:    #e8e4dc;
+      --muted:     #8a8698;
+      --dim:       #44425a;
+      --orange:    #f56200;
+      --orange-l:  #ff7d2a;
+      --orange-dim:rgba(245,98,0,0.10);
+      --blue:      #4f8ef7;
+      --teal:      #00c8b4;
+      --mono:      'JetBrains Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--ink);
+      color: var(--paper);
+      font-family: 'Inter', system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* =========================================
+       STAR FIELD
+    ========================================= */
+    #stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* =========================================
+       NAV
+    ========================================= */
+    .nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 0 max(2rem, calc((100vw - 880px)/2));
+      height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+      background: rgba(11,11,13,0.7);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      transition: border-color .3s;
+    }
+    .nav.scrolled { border-bottom-color: var(--line); }
+
+    .nav-id {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+    }
+    .nav-id span { color: var(--orange); }
+
+    .nav-links {
+      display: flex; gap: 1.8rem; list-style: none;
+    }
+    .nav-links a {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--paper); }
+
+    /* =========================================
+       HERO
+    ========================================= */
+    .hero {
+      position: relative;
+      min-height: 100svh;
+      display: flex; flex-direction: column;
+      justify-content: center;
+      padding: 8rem max(2rem, calc((100vw - 880px)/2)) 5rem;
+      overflow: hidden;
+    }
+
+    /* Orbit arc */
+    .orbit-arc {
+      position: absolute;
+      right: -80px; top: 50%;
+      transform: translateY(-50%);
+      width: 600px; height: 600px;
+      border-radius: 50%;
+      border: 1px solid rgba(245,98,0,0.08);
+      pointer-events: none;
+    }
+    .orbit-arc::after {
+      content: '';
+      position: absolute;
+      width: 8px; height: 8px;
+      background: var(--orange);
+      border-radius: 50%;
+      top: 18%;
+      left: 50%;
+      box-shadow: 0 0 16px var(--orange);
+      animation: orbit-dot 18s linear infinite;
+    }
+    @keyframes orbit-dot {
+      from { transform: rotate(0deg) translateX(300px); }
+      to   { transform: rotate(360deg) translateX(300px); }
+    }
+    .orbit-arc-2 {
+      position: absolute;
+      right: -120px; top: 50%;
+      transform: translateY(-50%);
+      width: 480px; height: 480px;
+      border-radius: 50%;
+      border: 1px solid rgba(245,98,0,0.04);
+      pointer-events: none;
+    }
+
+    .hero-tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 2rem;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .hero-tag::before {
+      content: '';
+      display: inline-block;
+      width: 24px; height: 1px;
+      background: var(--orange);
+    }
+
+    .hero-name {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      color: var(--paper);
+      margin-bottom: 2rem;
+    }
+    .hero-name .line2 {
+      display: block;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(240,237,230,0.3);
+    }
+
+    .hero-bio {
+      max-width: 560px;
+      font-size: 1.05rem;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 2.8rem;
+      font-weight: 300;
+    }
+    .hero-bio strong {
+      color: var(--paper);
+      font-weight: 500;
+    }
+
+    .hero-actions {
+      display: flex; flex-wrap: wrap; gap: 0.8rem;
+      margin-bottom: 4rem;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 9px 20px;
+      border-radius: 6px;
+      font-size: 13px; font-weight: 500;
+      letter-spacing: 0.02em;
+      transition: all .2s;
+      text-decoration: none;
+    }
+    .btn-fill {
+      background: var(--orange);
+      color: #fff;
+    }
+    .btn-fill:hover { background: var(--orange-l); transform: translateY(-1px); }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid var(--line2);
+      color: var(--muted);
+    }
+    .btn-outline:hover { border-color: var(--orange); color: var(--orange); transform: translateY(-1px); }
+    .btn svg { width: 14px; height: 14px; }
+
+    .hero-scroll {
+      display: flex; align-items: center; gap: 10px;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--dim);
+      letter-spacing: 0.1em;
+    }
+    .hero-scroll::after {
+      content: '';
+      flex: 1; max-width: 80px;
+      height: 1px;
+      background: linear-gradient(90deg, var(--line2), transparent);
+    }
+
+    /* =========================================
+       QUICK NAV
+    ========================================= */
+    .quick-nav {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+      margin-bottom: 3rem;
+    }
+    .qnav {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--dim);
+      background: var(--ink2);
+      border: 1px solid var(--line);
+      text-decoration: none;
+      transition: all .2s;
+    }
+    .qnav:hover {
+      color: var(--orange);
+      border-color: rgba(245,98,0,0.35);
+      background: var(--orange-dim);
+    }
+    .qnav-num {
+      color: var(--orange);
+      font-size: 8px;
+    }
+
+    /* =========================================
+       SECTION LAYOUT
+    ========================================= */
+    .page-body {
+      position: relative; z-index: 1;
+    }
+
+    .section {
+      padding: 6rem max(2rem, calc((100vw - 880px)/2));
+      border-top: 1px solid var(--line);
+    }
+
+    .section-head {
+      display: flex; align-items: baseline; gap: 1rem;
+      margin-bottom: 3.5rem;
+    }
+    .section-num {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--orange);
+      letter-spacing: 0.1em;
+    }
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: var(--paper);
+      letter-spacing: -0.02em;
+    }
+    .section-title em {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--muted);
+    }
+
+    /* =========================================
+       ABOUT (split layout)
+    ========================================= */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .about-text p {
+      font-size: 0.95rem;
+      color: var(--muted);
+      margin-bottom: 1.2rem;
+      line-height: 1.85;
+    }
+    .about-text p strong { color: var(--paper); font-weight: 500; }
+    .about-text p:first-child { font-size: 1.05rem; color: var(--paper2); }
+
+    .about-side { display: flex; flex-direction: column; gap: 2rem; }
+
+    .info-block { }
+    .info-label {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--dim);
+      margin-bottom: 0.6rem;
+    }
+    .info-val {
+      font-size: 0.88rem;
+      color: var(--muted);
+    }
+    .info-val a:hover { color: var(--orange); text-decoration: underline; }
+
+    .interests-wrap {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      margin-top: 0.4rem;
+    }
+    .chip {
+      font-size: 11px;
+      color: var(--muted);
+      background: var(--ink2);
+      border: 1px solid var(--line);
+      padding: 3px 10px;
+      border-radius: 4px;
+      transition: all .2s;
+    }
+    .chip:hover { border-color: var(--orange); color: var(--orange-l); }
+    .chip.active { background: var(--orange-dim); border-color: rgba(245,98,0,0.3); color: var(--orange-l); }
+
+    /* =========================================
+       PUBLICATIONS
+    ========================================= */
+    .pub-list {
+      display: flex; flex-direction: column;
+      counter-reset: pub;
+    }
+
+    .pub {
+      display: grid;
+      grid-template-columns: 2.5rem 1fr;
+      gap: 1.2rem;
+      padding: 1.8rem 0;
+      border-bottom: 1px solid var(--line);
+      position: relative;
+      transition: background .2s;
+    }
+    .pub:last-child { border-bottom: none; }
+    .pub:hover { background: none; }
+
+    .pub-n {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--dim);
+      padding-top: 5px;
+      counter-increment: pub;
+    }
+
+    .pub-type {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border-radius: 3px;
+      display: inline-block;
+      margin-bottom: 0.6rem;
+      font-weight: 500;
+    }
+    .type-prep    { background: rgba(245,158,11,0.1); color: #f59e0b; border: 1px solid rgba(245,158,11,0.2); }
+    .type-preprint{ background: rgba(0,200,180,0.08); color: var(--teal); border: 1px solid rgba(0,200,180,0.2); }
+    .type-conf    { background: rgba(79,142,247,0.09); color: var(--blue); border: 1px solid rgba(79,142,247,0.2); }
+
+    .pub-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.97rem;
+      font-weight: 600;
+      color: var(--paper);
+      line-height: 1.4;
+      margin-bottom: 0.4rem;
+      letter-spacing: -0.01em;
+    }
+    .pub-authors {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 0.2rem;
+    }
+    .pub-authors .me {
+      color: var(--paper2);
+      font-weight: 500;
+    }
+    .pub-venue {
+      font-size: 0.8rem;
+      color: var(--dim);
+      font-style: italic;
+      margin-bottom: 0.6rem;
+    }
+    .pub-note {
+      font-size: 0.78rem;
+      color: var(--dim);
+      padding-left: 0.8rem;
+      border-left: 2px solid var(--line2);
+    }
+
+    /* =========================================
+       EXPERIENCE
+    ========================================= */
+    .exp-list {
+      display: flex; flex-direction: column; gap: 0;
+    }
+
+    .exp-item {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 2.5rem;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .exp-item:first-child { padding-top: 0; }
+    .exp-item:last-child { border-bottom: none; padding-bottom: 0; }
+
+    .exp-meta { }
+    .exp-date {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--dim);
+      letter-spacing: 0.08em;
+      margin-bottom: 0.5rem;
+    }
+    .exp-org {
+      font-size: 0.82rem;
+      color: var(--orange);
+      font-weight: 500;
+      margin-bottom: 0.3rem;
+    }
+    .exp-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 0.8rem; }
+    .exp-tag {
+      font-family: var(--mono);
+      font-size: 9px;
+      color: var(--dim);
+      background: var(--ink2);
+      border: 1px solid var(--line);
+      padding: 2px 7px;
+      border-radius: 3px;
+    }
+
+    .exp-content { }
+    .exp-role {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--paper);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.7rem;
+    }
+    .exp-body {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+    .exp-body li {
+      margin-bottom: 0.4rem;
+      list-style: none;
+      padding-left: 1rem;
+      position: relative;
+    }
+    .exp-body li::before {
+      content: '›';
+      position: absolute; left: 0;
+      color: var(--orange);
+      font-weight: 700;
+    }
+    .exp-body strong { color: var(--paper2); font-weight: 500; }
+
+    /* =========================================
+       EDUCATION
+    ========================================= */
+    .edu-list {
+      display: flex; flex-direction: column; gap: 0;
+    }
+    .edu-item {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 2.5rem;
+      padding: 1.8rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .edu-item:first-child { padding-top: 0; }
+    .edu-item:last-child { border-bottom: none; padding-bottom: 0; }
+
+    .edu-years {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--dim);
+      letter-spacing: 0.08em;
+      margin-bottom: 0.4rem;
+    }
+    .edu-inst {
+      font-size: 0.82rem;
+      color: var(--orange);
+      font-weight: 500;
+    }
+    .edu-degree {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--paper);
+      letter-spacing: -0.02em;
+      margin-bottom: 0.4rem;
+    }
+    .edu-note {
+      font-size: 0.84rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    /* =========================================
+       SKILLS
+    ========================================= */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0;
+    }
+    .skill-block {
+      padding: 1.8rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .skill-block:nth-child(odd)  { padding-right: 2.5rem; border-right: 1px solid var(--line); }
+    .skill-block:nth-child(even) { padding-left: 2.5rem; }
+    .skill-block:last-child,
+    .skill-block:nth-last-child(2):nth-child(odd) { border-bottom: none; }
+
+    .skill-label {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--dim);
+      margin-bottom: 0.8rem;
+    }
+    .skill-pills { display: flex; flex-wrap: wrap; gap: 5px; }
+    .skill-pill {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      background: var(--ink2);
+      border: 1px solid var(--line);
+      padding: 3px 10px;
+      border-radius: 4px;
+      transition: all .2s;
+    }
+    .skill-pill:hover { border-color: var(--orange); color: var(--orange-l); }
+    .skill-pill.hi { border-color: var(--line2); color: var(--paper2); }
+
+    /* =========================================
+       AWARDS
+    ========================================= */
+    .award-list {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+    .award-item {
+      padding: 1.6rem;
+      border: 1px solid var(--line);
+      margin: -1px 0 0 -1px;
+      transition: background .2s, border-color .2s;
+    }
+    .award-item:hover { background: var(--ink2); border-color: var(--line2); }
+    .award-icon {
+      font-size: 1.3rem;
+      margin-bottom: 0.7rem;
+      display: block;
+    }
+    .award-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--paper);
+      margin-bottom: 0.3rem;
+    }
+    .award-desc {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .award-year {
+      font-family: var(--mono);
+      font-size: 9px;
+      color: var(--dim);
+      margin-top: 0.5rem;
+    }
+
+    /* =========================================
+       FOOTER
+    ========================================= */
+    .footer {
+      padding: 3rem max(2rem, calc((100vw - 880px)/2));
+      border-top: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-l {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--dim);
+    }
+    .footer-links {
+      display: flex; gap: 1.5rem;
+    }
+    .footer-links a {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--dim);
+      transition: color .2s;
+    }
+    .footer-links a:hover { color: var(--orange); }
+
+    /* =========================================
+       REVEAL
+    ========================================= */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* =========================================
+       RESPONSIVE
+    ========================================= */
+    @media (max-width: 760px) {
+      .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .exp-item, .edu-item { grid-template-columns: 1fr; gap: 0.4rem; }
+      .exp-meta { display: flex; gap: 1rem; align-items: baseline; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .skill-block:nth-child(odd)  { padding-right: 0; border-right: none; }
+      .skill-block:nth-child(even) { padding-left: 0; }
+      .skill-block { border-bottom: 1px solid var(--line) !important; }
+      .award-list { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .orbit-arc, .orbit-arc-2 { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Stars -->
+<canvas id="stars"></canvas>
+
+<!-- Nav -->
+<nav class="nav" id="nav">
+  <span class="nav-id">mv<span>.</span>dev</span>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#publications">Publications</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#skills">Skills</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="orbit-arc"></div>
+  <div class="orbit-arc-2"></div>
+
+  <p class="hero-tag">Aerospace Engineer · PhD Candidate · Founder</p>
+
+  <h1 class="hero-name">
+    Miguel<br>
+    <span class="line2">Valdebenito</span>
+  </h1>
+
+  <p class="hero-bio">
+    I build <strong>intelligent systems</strong> for the real world.
+    From CubeSats to groundwater prediction, I work at the intersection of
+    <strong>aerospace engineering, satellite remote sensing,</strong> and
+    <strong>machine learning</strong> to solve hard problems in
+    data-scarce environments. Based in Chile. Thinking globally.
+  </p>
+
+  <div class="hero-actions">
+    <a href="mailto:miguel.valdebenito2501@alumnos.ubiobio.cl" class="btn btn-fill">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+      </svg>
+      Get in touch
+    </a>
+    <a href="https://www.linkedin.com/in/miguelvch/" target="_blank" class="btn btn-outline">LinkedIn</a>
+    <a href="https://github.com/Miguev33" target="_blank" class="btn btn-outline">GitHub</a>
+    <a href="https://orcid.org/0009-0008-9117-1281" target="_blank" class="btn btn-outline">ORCID</a>
+  </div>
+
+  <div class="quick-nav">
+    <a href="#about" class="qnav"><span class="qnav-num">01</span> About</a>
+    <a href="#publications" class="qnav"><span class="qnav-num">02</span> Publications</a>
+    <a href="#experience" class="qnav"><span class="qnav-num">03</span> Experience</a>
+    <a href="#education" class="qnav"><span class="qnav-num">04</span> Education</a>
+    <a href="#skills" class="qnav"><span class="qnav-num">05</span> Skills</a>
+    <a href="#awards" class="qnav"><span class="qnav-num">06</span> Awards</a>
+  </div>
+
+  <p class="hero-scroll">Scroll to explore</p>
+</header>
+
+<div class="page-body">
+
+  <!-- ABOUT -->
+  <section class="section reveal" id="about">
+    <div class="section-head">
+      <span class="section-num">01</span>
+      <h2 class="section-title">About <em>me</em></h2>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          I am an <strong>aerospace and civil engineer</strong> from Universidad de Concepcion
+          who took the long road: satellites, startups, geophysics, and now a PhD.
+          My work is driven by a simple conviction that <strong>engineering should solve
+          problems that actually matter</strong>, particularly for regions where data is scarce
+          and climate change hits hardest.
+        </p>
+        <p>
+          Currently a PhD candidate at Universidad del Bío-Bío, I design spatiotemporal ML
+          architectures that fuse <strong>satellite remote sensing</strong> (MODIS, Landsat,
+          Sentinel), seismoelectric signals, and sparse field observations to predict
+          groundwater dynamics across Chile's agricultural zones.
+        </p>
+        <p>
+          Outside the lab, I co-founded <strong>Aslight Engineering</strong> (Smart Drone Chute
+          recovery systems, CORFO-funded, Silicon Valley and Boston programs) and now lead
+          <strong>IDESAT</strong>, a deep-tech venture in educational aerospace systems selected
+          for Brain Chile 2024. I believe the best researchers are also builders.
+        </p>
+      </div>
+
+      <div class="about-side">
+        <div class="info-block">
+          <div class="info-label">Current position</div>
+          <div class="info-val">PhD Candidate, Engineering<br>Universidad del Bío-Bío · 2025 to 2028</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">Location</div>
+          <div class="info-val">Concepción, Chile</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">Contact</div>
+          <div class="info-val">
+            <a href="mailto:miguel.valdebenito2501@alumnos.ubiobio.cl">miguel.valdebenito2501@alumnos.ubiobio.cl</a><br>
+            <a href="https://www.linkedin.com/in/miguelvch/" target="_blank">linkedin.com/in/miguelvch</a>
+          </div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">Research interests</div>
+          <div class="interests-wrap">
+            <span class="chip active">Geospatial AI</span>
+            <span class="chip active">Physics-Informed ML</span>
+            <span class="chip active">Remote Sensing</span>
+            <span class="chip">Hydrogeology</span>
+            <span class="chip">Satellite Systems</span>
+            <span class="chip">Deep-Tech Startups</span>
+            <span class="chip">Water Security</span>
+          </div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">Languages</div>
+          <div class="info-val">Spanish (native) · English C2 Proficient (EF SET 76/100)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PUBLICATIONS -->
+  <section class="section reveal" id="publications">
+    <div class="section-head">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Publications</h2>
+    </div>
+
+    <div class="pub-list">
+
+      <div class="pub">
+        <div class="pub-n">1</div>
+        <div>
+          <span class="pub-type type-prep">In preparation</span>
+          <div class="pub-title">Monthly groundwater level prediction under sparse piezometric monitoring in the Maule Region, central Chile, using hydrogeologically-informed machine learning</div>
+          <div class="pub-authors"><span class="me">Valdebenito M.</span> and Saldías G.</div>
+          <div class="pub-venue">Journal of Hydrology: Regional Studies</div>
+          <div class="pub-note">Core dissertation chapter: physics-informed ML for aquifer forecasting under severe observational sparsity</div>
+        </div>
+      </div>
+
+      <div class="pub">
+        <div class="pub-n">2</div>
+        <div>
+          <span class="pub-type type-preprint">Preprint · SSRN 6126566</span>
+          <div class="pub-title">Towards surface-based hydraulic conductivity mapping using seismoelectric signals and data-driven models</div>
+          <div class="pub-authors">Aedo R., Jiménez J., Quiero F., Salgueiro Y., <span class="me">Valdebenito M.</span>, Rey C. and Saldías G. (2025)</div>
+          <div class="pub-venue">SSRN Electronic Journal</div>
+          <div class="pub-note">Seismoelectric signal processing with ML regression for subsurface hydraulic property estimation</div>
+        </div>
+      </div>
+
+      <div class="pub">
+        <div class="pub-n">3</div>
+        <div>
+          <span class="pub-type type-conf">Conference · IAH 2025</span>
+          <div class="pub-title">Intelligent groundwater exploration system integrating SEMq data through AI models</div>
+          <div class="pub-authors"><span class="me">Valdebenito M.</span>, Aedo R., González O. and Jiménez J. (2025)</div>
+          <div class="pub-venue">1st Chilean Hydrogeological Congress, IAH. Termas El Corazón, Chile</div>
+        </div>
+      </div>
+
+      <div class="pub">
+        <div class="pub-n">4</div>
+        <div>
+          <span class="pub-type type-conf">Conference · XXXVII CIE 2025</span>
+          <div class="pub-title">Gamification effects for learning electromagnetism in laboratory settings</div>
+          <div class="pub-authors"><span class="me">Valdebenito M.</span>, Aedo R., Espinosa O., González O. and Saldías G. (2025)</div>
+          <div class="pub-venue">XXXVII Chilean Engineering Education Congress, Universidad del Bío-Bío</div>
+        </div>
+      </div>
+
+      <div class="pub">
+        <div class="pub-n">5</div>
+        <div>
+          <span class="pub-type type-conf">Conference · XXXVII CIE 2025</span>
+          <div class="pub-title">Active learning in aerospace and space sciences with accessible hardware and operative simulation</div>
+          <div class="pub-authors"><span class="me">Valdebenito M.</span>, Aedo R. and Valenzuela-Núñez C. (2025)</div>
+          <div class="pub-venue">XXXVII Chilean Engineering Education Congress, Universidad del Bío-Bío</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- EXPERIENCE -->
+  <section class="section reveal" id="experience">
+    <div class="section-head">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Experience</h2>
+    </div>
+
+    <div class="exp-list">
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-date">May 2022 · Present</div>
+          <div class="exp-org">G-STRATA SpA</div>
+          <div class="exp-tags">
+            <span class="exp-tag">Python</span>
+            <span class="exp-tag">GEE</span>
+            <span class="exp-tag">SHAP</span>
+            <span class="exp-tag">Geophysics</span>
+          </div>
+        </div>
+        <div class="exp-content">
+          <div class="exp-role">Geospatial AI Systems Architect</div>
+          <ul class="exp-body">
+            <li>Lead design of AI-driven geospatial systems for groundwater intelligence, including the <strong>SEMq-1 geophysical sensor</strong> and the G-WaterLink territorial intelligence platform.</li>
+            <li>Build scalable ML pipelines combining satellite remote sensing (MODIS, Landsat, Sentinel), GIS, seismoelectric geophysics, and in-situ sensors, with SHAP for spatiotemporal forecasting interpretability.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-date">Jun 2024 · Present</div>
+          <div class="exp-org">IDESAT</div>
+          <div class="exp-tags">
+            <span class="exp-tag">CubeSat</span>
+            <span class="exp-tag">Robotics</span>
+            <span class="exp-tag">Brain Chile</span>
+          </div>
+        </div>
+        <div class="exp-content">
+          <div class="exp-role">Founder and Technical Lead</div>
+          <ul class="exp-body">
+            <li>Lead R&amp;D of deep-tech aerospace systems: educational satellite platforms, robotics, and additive manufacturing.</li>
+            <li>Selected for <strong>Brain Chile National Deep-Tech Innovation Program (2024)</strong>.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-date">Oct 2025 · Feb 2026</div>
+          <div class="exp-org">Universidad de Antofagasta</div>
+          <div class="exp-tags">
+            <span class="exp-tag">Payload</span>
+            <span class="exp-tag">FRPD</span>
+            <span class="exp-tag">Outreach</span>
+          </div>
+        </div>
+        <div class="exp-content">
+          <div class="exp-role">Research Engineer, Satellite Technologies</div>
+          <ul class="exp-body">
+            <li>Aerospace design, payload integration, testing and monitoring for the FRPD project <em>Transferencia Desarrollo Regional de Tecnologías Satelitales</em>.</li>
+            <li>Planned and coordinated educational workshops on satellite technologies for secondary school students.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-date">Jun 2024 · Feb 2025</div>
+          <div class="exp-org">Universidad de Concepción</div>
+          <div class="exp-tags">
+            <span class="exp-tag">Fondecyt</span>
+            <span class="exp-tag">ANID</span>
+          </div>
+        </div>
+        <div class="exp-content">
+          <div class="exp-role">Research Development Coordinator</div>
+          <ul class="exp-body">
+            <li>Formulated ANID competitive proposals across engineering, agronomy, and oceanography: Fondecyt Regular, Fondef, Centros Tecnológicos, and Centros de Investigación del Milenio.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-date">Oct 2019 · Jun 2024</div>
+          <div class="exp-org">Aslight Engineering SpA</div>
+          <div class="exp-tags">
+            <span class="exp-tag">Aerospace</span>
+            <span class="exp-tag">CORFO</span>
+            <span class="exp-tag">Silicon Valley</span>
+          </div>
+        </div>
+        <div class="exp-content">
+          <div class="exp-role">Co-Founder and Systems Architect</div>
+          <ul class="exp-body">
+            <li>Co-founded deep-tech startup developing <strong>Smart Drone Chute</strong> aerospace recovery systems. Full product cycle from concept to functional validation.</li>
+            <li>Secured <strong>CORFO public funding</strong>. International programs in Silicon Valley and Boston.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="exp-item">
+        <div class="exp-meta">
+          <div class="exp-date">Jan 2017, Jan 2018</div>
+          <div class="exp-org">U. de Chile / SUCHAI</div>
+          <div class="exp-tags">
+            <span class="exp-tag">CubeSat</span>
+            <span class="exp-tag">MATLAB</span>
+            <span class="exp-tag">STK</span>
+          </div>
+        </div>
+        <div class="exp-content">
+          <div class="exp-role">Research Intern, Satellite Systems</div>
+          <ul class="exp-body">
+            <li>Attitude control analysis for a <strong>3U CubeSat</strong> under multiple boom/antenna configurations. Developed MATLAB simulation (roll, yaw, pitch) validated with STK.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section class="section reveal" id="education">
+    <div class="section-head">
+      <span class="section-num">04</span>
+      <h2 class="section-title">Education</h2>
+    </div>
+
+    <div class="edu-list">
+
+      <div class="edu-item">
+        <div>
+          <div class="edu-years">2025 to 2028 (expected)</div>
+          <div class="edu-inst">Universidad del Bío-Bío, Chile</div>
+        </div>
+        <div>
+          <div class="edu-degree">Ph.D. in Engineering</div>
+          <div class="edu-note">Specialization in Data Engineering and Hydrogeological Modeling. Supervisor: Prof. G. Saldías. Dissertation: ML architectures integrating satellite remote sensing, geophysics, and sparse field data for groundwater prediction.</div>
+        </div>
+      </div>
+
+      <div class="edu-item">
+        <div>
+          <div class="edu-years">2011 to 2019</div>
+          <div class="edu-inst">Universidad de Concepción, Chile</div>
+        </div>
+        <div>
+          <div class="edu-degree">B.S. in Civil and Aerospace Engineering</div>
+          <div class="edu-note">Capstone: Satellite Communication Systems for Mobile Telephony Coverage in Continental Chile.</div>
+        </div>
+      </div>
+
+      <div class="edu-item">
+        <div>
+          <div class="edu-years">2023</div>
+          <div class="edu-inst">U. Técnica Federico Santa María</div>
+        </div>
+        <div>
+          <div class="edu-degree">Diploma in Geospatial Information</div>
+          <div class="edu-note">Specialization in Satellite Technology within the Chilean National Satellite System (SNSAT).</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="section reveal" id="skills">
+    <div class="section-head">
+      <span class="section-num">05</span>
+      <h2 class="section-title">Technical <em>skills</em></h2>
+    </div>
+
+    <div class="skills-grid">
+      <div class="skill-block">
+        <div class="skill-label">Machine Learning and AI</div>
+        <div class="skill-pills">
+          <span class="skill-pill hi">Python</span>
+          <span class="skill-pill hi">PyTorch</span>
+          <span class="skill-pill hi">TensorFlow</span>
+          <span class="skill-pill">Scikit-learn</span>
+          <span class="skill-pill">XGBoost</span>
+          <span class="skill-pill hi">SHAP</span>
+          <span class="skill-pill">LSTM</span>
+          <span class="skill-pill">Physics-Informed ML</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-label">Geospatial and Remote Sensing</div>
+        <div class="skill-pills">
+          <span class="skill-pill hi">Google Earth Engine</span>
+          <span class="skill-pill">QGIS</span>
+          <span class="skill-pill">ArcGIS</span>
+          <span class="skill-pill">GeoPandas</span>
+          <span class="skill-pill">Rasterio</span>
+          <span class="skill-pill">MODIS / Landsat / Sentinel</span>
+          <span class="skill-pill">Spatial Kriging</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-label">Aerospace and Systems</div>
+        <div class="skill-pills">
+          <span class="skill-pill hi">CubeSat Design</span>
+          <span class="skill-pill">Attitude Control</span>
+          <span class="skill-pill">STK</span>
+          <span class="skill-pill">MATLAB</span>
+          <span class="skill-pill">Payload Integration</span>
+          <span class="skill-pill">Additive Manufacturing</span>
+          <span class="skill-pill">System Architecture</span>
+        </div>
+      </div>
+      <div class="skill-block">
+        <div class="skill-label">Scientific Computing</div>
+        <div class="skill-pills">
+          <span class="skill-pill">NumPy</span>
+          <span class="skill-pill">SciPy</span>
+          <span class="skill-pill">Pandas</span>
+          <span class="skill-pill">Matplotlib</span>
+          <span class="skill-pill">Plotly</span>
+          <span class="skill-pill">Jupyter</span>
+          <span class="skill-pill hi">Git / GitHub</span>
+          <span class="skill-pill">LaTeX</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AWARDS -->
+  <section class="section reveal" id="awards">
+    <div class="section-head">
+      <span class="section-num">06</span>
+      <h2 class="section-title">Awards <em>and service</em></h2>
+    </div>
+
+    <div class="award-list">
+      <div class="award-item">
+        <span class="award-icon">🧠</span>
+        <div class="award-title">Brain Chile</div>
+        <div class="award-desc">National Deep-Tech Innovation Program. Selected as founder of IDESAT.</div>
+        <div class="award-year">2024</div>
+      </div>
+      <div class="award-item">
+        <span class="award-icon">🚀</span>
+        <div class="award-title">CORFO Funding</div>
+        <div class="award-desc">Public competitive funding secured for aerospace recovery systems at Aslight Engineering SpA.</div>
+        <div class="award-year">2021</div>
+      </div>
+      <div class="award-item">
+        <span class="award-icon">🏔️</span>
+        <div class="award-title">Draper University Hero Program</div>
+        <div class="award-desc">Selected for the Draper University Hero Program in Silicon Valley with Aslight Engineering SpA and the Smart Drone Chute emergency aerospace recovery system.</div>
+        <div class="award-year">2021</div>
+      </div>
+      <div class="award-item">
+        <span class="award-icon">🌎</span>
+        <div class="award-title">ScaleUp Labs Boston</div>
+        <div class="award-desc">Participated in ScaleUp Labs Boston as part of G-STRATA SpA, closing with a demo week in the Boston Tech Week 2026.</div>
+        <div class="award-year">2022</div>
+      </div>
+      <div class="award-item">
+        <span class="award-icon">🗣️</span>
+        <div class="award-title">English C2 Proficient</div>
+        <div class="award-desc">EF SET English Certificate. Score: 76 out of 100.</div>
+        <div class="award-year">Certified</div>
+      </div>
+      <div class="award-item">
+        <span class="award-icon">💧</span>
+        <div class="award-title">ISO 14046 Water Footprint</div>
+        <div class="award-desc">Certified Level C. Water Footprint Assessment Standard.</div>
+        <div class="award-year">Certified</div>
+      </div>
+      <div class="award-item">
+        <span class="award-icon">📡</span>
+        <div class="award-title">Science Communication</div>
+        <div class="award-desc">Satellite technology workshops for secondary school students, Universidad de Antofagasta.</div>
+        <div class="award-year">2025 to 2026</div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /page-body -->
+
+<footer class="footer">
+  <div class="footer-l">
+    Miguel Valdebenito · Concepción, Chile · 2025
+  </div>
+  <div class="footer-links">
+    <a href="mailto:miguel.valdebenito2501@alumnos.ubiobio.cl">Email</a>
+    <a href="https://www.linkedin.com/in/miguelvch/" target="_blank">LinkedIn</a>
+    <a href="https://github.com/Miguev33" target="_blank">GitHub</a>
+    <a href="https://orcid.org/0009-0008-9117-1281" target="_blank">ORCID</a>
+  </div>
+</footer>
+
+<script>
+/* ── Stars ── */
+(function() {
+  const c = document.getElementById('stars');
+  const ctx = c.getContext('2d');
+  let W, H, stars = [];
+
+  function resize() {
+    W = c.width  = window.innerWidth;
+    H = c.height = window.innerHeight;
+  }
+
+  function init() {
+    resize();
+    stars = Array.from({ length: 130 }, () => ({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      r: Math.random() * 0.9 + 0.1,
+      a: Math.random(),
+      speed: Math.random() * 0.004 + 0.001,
+      phase: Math.random() * Math.PI * 2,
+    }));
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    stars.forEach(s => {
+      s.phase += s.speed;
+      const alpha = (Math.sin(s.phase) * 0.5 + 0.5) * 0.6 + 0.05;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', () => { resize(); init(); });
+  init(); draw();
+})();
+
+/* ── Nav scroll ── */
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 40);
+});
+
+/* ── Scroll reveal ── */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+  });
+}, { threshold: 0.07 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
